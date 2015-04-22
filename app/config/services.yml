@@ -1,0 +1,7 @@
+services:
+    user_repository:
+        class: AppBundle\Model\UserRepository
+    stats_system:
+        class: AppBundle\Service\StatsSystem
+    marketing_system:
+        class: AppBundle\Service\MarketingSystem
