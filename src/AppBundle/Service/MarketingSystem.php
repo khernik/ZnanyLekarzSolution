@@ -15,7 +15,7 @@ class MarketingSystem
 {
     public function postRequest($data)
     {
-        $logger = new Logger('logger');
+        $logger = new Logger('main');
         $logger->info('Email has been changed from ' . $data[0] . ' to ' . $data[1] . ' - marketing system');
 
         return true;

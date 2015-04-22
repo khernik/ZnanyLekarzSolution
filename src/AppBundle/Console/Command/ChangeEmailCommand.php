@@ -53,7 +53,7 @@ class ChangeEmailCommand extends ContainerAwareCommand
 
             if($user)
             {
-                $this->getContainer()->get('UserService')->changeEmail($user, $user->getEmail(), $oldEmail);
+                $this->getContainer()->get('UserService')->changeEmail($user, $newEmail, $oldEmail);
                 $text = 'The email has changed';
             }
             else
