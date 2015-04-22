@@ -38,25 +38,23 @@ class ChangeEmailCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // get arguments
         $oldEmail = $input->getArgument('oldEmail');
         $newEmail = $input->getArgument('newEmail');
         $repeatEmail = $input->getArgument('repeatEmail');
 
+        // if emails match
         if($newEmail == $repeatEmail)
         {
             $repository = new UserRepository();
+
+            // get user
             $user = $repository->getUserByEmail($oldEmail);
 
             if($user)
             {
-                $user->setEmail($newEmail);
-                $text = 'The email has been changed';
-
-                $this->getContainer()->get('StatsSystem')->postRequest(json_encode([$user, $_POST['oldEmail']]));
-                $this->getContainer()->get('MarketingSystem')->postRequest(json_encode([$user, $_POST['oldEmail']]));
-
-                //$logger = new Logger('logger');
-                //$logger->info('Email has been changed from ' . $oldEmail . ' to ' . $newEmail);
+                $this->getContainer()->get('UserService')->changeEmail($user, $user->getEmail(), $oldEmail);
+                $text = 'The email has changed';
             }
             else
             {

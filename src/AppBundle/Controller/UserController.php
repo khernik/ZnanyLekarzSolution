@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Form\Type\ChangeEmailType;
 use AppBundle\Model\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,6 +12,10 @@ class UserController extends Controller
 {
 
     /**
+     * Display email changing form or change the email
+     *
+     * @param Request $request
+     * @return Response
      * @Route("/change_email", name="change_email")
      */
     public function indexAction(Request $request)
@@ -20,7 +23,9 @@ class UserController extends Controller
         if ($this->getRequest()->getMethod() == 'POST')
         {
             $repository = new UserRepository();
-            $user = $repository->getUserByEmail($_POST['oldEmail']);
+
+            // get user
+            $user = $repository->getUserByEmail($request->request->get('oldEmail'));
 
             if(! $user)
             {
@@ -29,10 +34,7 @@ class UserController extends Controller
 
             if($_POST['newEmail'] == $_POST['repeatEmail'])
             {
-                $user->setEmail($_POST['newEmail']);
-
-                $this->get('StatsSystem')->postRequest(json_encode([$user, $_POST['oldEmail']]));
-                $this->get('MarketingSystem')->postRequest(json_encode([$user, $_POST['oldEmail']]));
+                $this->get('UserService')->changeEmail($user, $request->request->get('newEmail'), $request->request->get('oldEmail'));
             }
             else
             {

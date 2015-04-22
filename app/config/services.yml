@@ -5,3 +5,6 @@ services:
         class: AppBundle\Service\StatsSystem
     marketing_system:
         class: AppBundle\Service\MarketingSystem
+    UserService:
+        class: AppBundle\Service\UserService
+        arguments: ["@stats_system", "@marketing_system"]

@@ -11,14 +11,12 @@ namespace AppBundle\Service;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-class MArketingSystem
+class MarketingSystem
 {
     public function postRequest($data)
     {
-        $data = json_decode($data);
-
         $logger = new Logger('logger');
-        $logger->info('Email has been changed from ' . $data[0]->getEmail() . ' to ' . $data[1] . ' - marketing system');
+        $logger->info('Email has been changed from ' . $data[0] . ' to ' . $data[1] . ' - marketing system');
 
         return true;
     }
